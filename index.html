@@ -1,0 +1,479 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Montera Labs · Desarrollo de software en Lima</title>
+<meta name="description" content="Montera Labs diseña y construye sistemas a medida y productos propios: seguros, pensados para crecer y hechos para que tu equipo los use de verdad.">
+<meta name="theme-color" content="#0E0E10">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 34 34'%3E%3Crect width='34' height='34' rx='8' fill='%2317171A'/%3E%3Cpath d='M6 25 L14 12 L19 19 L22 15 L28 25 Z' fill='none' stroke='%23D4C29A' stroke-width='1.8' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0E0E10;--bg-2:#121214;--surface:#17171A;--surface-hover:#1B1B1F;
+  --line:#222226;--line-2:#2A2A2E;--line-3:#3A3A40;
+  --text:#F2F2F0;--text-strong:#FFFFFF;--text-2:#D6D6DA;--muted:#A1A1A6;--muted-2:#8E8E94;
+  --accent:#D4C29A;--ok:#4CB782;--warn:#D9A441;--alert:#E5654F;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,sans-serif;font-size:16px;line-height:1.6;overflow-x:hidden}
+a{color:#E4D6B4}a:hover{color:#fff}
+.wrap{max-width:1180px;margin:0 auto;padding-left:24px;padding-right:24px}
+.display{font-family:'Inter Tight',sans-serif;font-weight:600;letter-spacing:-0.03em;color:var(--text-strong);margin:0}
+.mono{font-family:'JetBrains Mono',monospace}
+.eyebrow{margin:0;font-size:13px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:var(--accent)}
+.lead{margin:0;font-size:18px;color:var(--muted)}
+.h2{font-size:44px;line-height:1.08}
+.sec-head{display:flex;flex-direction:column;gap:16px;max-width:680px}
+
+/* header */
+header{border-bottom:1px solid var(--line);position:relative;overflow:hidden}
+.nav{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px;padding-top:20px;padding-bottom:20px}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--text)}
+.brand span{font-family:'Inter Tight',sans-serif;font-weight:600;font-size:19px;letter-spacing:-.01em}
+nav{display:flex;flex-wrap:wrap;align-items:center;gap:30px;font-size:14px;font-weight:500}
+nav a.lnk{color:#B4B4B9;text-decoration:none;transition:color .2s}
+nav a.lnk:hover{color:#fff}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;background:var(--text);color:var(--bg);text-decoration:none;padding:15px 26px;border-radius:999px;font-weight:600;border:1px solid transparent;font:inherit;font-weight:600;cursor:pointer;min-height:48px;transition:transform .2s,background-color .2s,border-color .2s,color .2s}
+.btn:hover{transform:translateY(-2px);background:#fff;color:var(--bg)}
+.btn.sm{padding:11px 18px;min-height:44px}
+.btn.ghost{background:transparent;color:var(--text);border-color:var(--line-3)}
+.btn.ghost:hover{border-color:var(--accent);color:#fff;background:transparent}
+.btn[disabled]{opacity:.6;cursor:wait;transform:none}
+
+/* hero */
+.hero{position:relative;overflow:hidden}
+.hero-grid{position:absolute;inset:0;background-image:radial-gradient(#2A2A2E 1px,transparent 1px);background-size:28px 28px;-webkit-mask-image:radial-gradient(ellipse 70% 60% at 70% 40%,#000 30%,transparent 75%);mask-image:radial-gradient(ellipse 70% 60% at 70% 40%,#000 30%,transparent 75%)}
+.hero-in{position:relative;padding-top:104px;padding-bottom:96px;display:flex;flex-wrap:wrap;align-items:center;gap:64px}
+.hero-copy{flex:1 1 460px;min-width:0;display:flex;flex-direction:column;gap:26px}
+.hero h1{font-size:62px;line-height:1.04;letter-spacing:-.035em}
+.rot{display:inline-grid;vertical-align:top}
+.rot span{grid-area:1/1;white-space:nowrap;color:var(--accent);opacity:0;transform:translateY(.35em);transition:opacity .5s ease,transform .5s cubic-bezier(.2,.7,.2,1)}
+.rot span.on{opacity:1;transform:none}
+.live-dot{width:8px;height:8px;border-radius:50%;background:var(--ok);flex:none}
+.hero-visual{flex:1 1 440px;min-width:0;display:flex;flex-direction:column;gap:18px}
+
+.term{background:var(--bg-2);border:1px solid var(--line-2);border-radius:16px;overflow:hidden;box-shadow:0 40px 80px -40px rgba(0,0,0,.85)}
+.term-bar{display:flex;align-items:center;gap:8px;padding:12px 16px;border-bottom:1px solid var(--line);background:var(--surface)}
+.term-bar i{width:10px;height:10px;border-radius:50%;background:var(--line-3)}
+.term-body{padding:18px 20px 20px;font-family:'JetBrains Mono',monospace;font-size:13px;line-height:1.85}
+.term-line{display:flex;gap:10px;white-space:nowrap;overflow:hidden;opacity:0;transform:translateY(6px);transition:opacity .35s,transform .35s}
+.term-line.on{opacity:1;transform:none}
+.term-line b{font-weight:400;width:14px;flex:none}
+.cursor{display:inline-block;width:8px;height:16px;background:var(--text-2);margin-top:5px;animation:blink 1s steps(1) infinite}
+.term-prog{height:3px;background:#1C1C1F}
+.term-prog div{height:3px;background:var(--accent);width:0;transition:width .6s ease}
+
+.board{background:var(--surface);border:1px solid var(--line-2);border-radius:16px;padding:18px 20px;margin-left:40px;box-shadow:0 30px 60px -36px rgba(0,0,0,.85)}
+.board-row{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1.2fr);gap:10px;align-items:center;padding:9px 0;border-top:1px solid var(--line);font-size:13px}
+.st{display:flex;align-items:center;gap:8px;color:var(--text-2)}
+.st i{width:8px;height:8px;border-radius:50%;flex:none}
+
+/* marquee */
+.marquee{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--bg-2);overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+.track{display:flex;width:max-content;padding:22px 0;font-size:15px;animation:marquee 38s linear infinite}
+.marquee:hover .track{animation-play-state:paused}
+.track>div{display:flex;align-items:center;gap:40px;padding-right:40px;color:var(--text-2);white-space:nowrap}
+.track .sep{color:var(--accent)}
+
+/* sections */
+.section{padding-top:112px;padding-bottom:48px;display:flex;flex-direction:column;gap:52px}
+.grid{display:grid;gap:20px}
+.card{background:var(--surface);border:1px solid var(--line-2);border-radius:18px;padding:30px;display:flex;flex-direction:column;gap:12px;transition:transform .35s cubic-bezier(.2,.7,.2,1),border-color .35s,background-color .35s}
+.card:hover{transform:translateY(-6px);border-color:#4A4434;background:var(--surface-hover)}
+.card .ico{transition:transform .35s cubic-bezier(.2,.7,.2,1)}
+.card:hover .ico{transform:scale(1.12) rotate(-4deg)}
+.card-title{font-family:'Inter Tight',sans-serif;font-weight:600;font-size:20px;color:#fff;letter-spacing:-.01em}
+.muted{color:var(--muted)}
+.num{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--muted-2)}
+
+.product{padding:40px;gap:20px}
+.product h3{font-size:30px;margin:0}
+.product ul{margin:0;padding:20px 0 0;border-top:1px solid #26262A;list-style:none;display:flex;flex-direction:column;gap:13px;color:var(--text-2)}
+.product li{display:flex;gap:12px}
+.product li svg{flex:none;margin-top:4px}
+.product .cta{margin-top:auto;padding-top:10px}
+
+.steps{margin:0;padding:0;list-style:none;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:24px}
+.steps li{border-top:1px solid var(--line-3);padding-top:22px;display:flex;flex-direction:column;gap:10px;transition:border-color .4s}
+.steps li:hover{border-color:var(--accent)}
+.steps li:last-child{border-color:var(--accent)}
+.steps .t{font-family:'Inter Tight',sans-serif;font-weight:600;font-size:21px;color:#fff;letter-spacing:-.01em}
+
+.band{background:var(--bg-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.split{padding-top:112px;padding-bottom:112px;display:flex;flex-wrap:wrap;gap:64px;align-items:flex-start}
+.split>.l{flex:1 1 380px;min-width:0;display:flex;flex-direction:column;gap:16px}
+.split>.r{flex:1 1 520px;min-width:0}
+.feat{display:flex;flex-direction:column;gap:10px}
+.feat strong{font-weight:600;font-size:17px;color:#fff}
+
+.avatar{width:56px;height:56px;border-radius:50%;background:#222226;border:1px solid var(--line-3);color:var(--accent);display:flex;align-items:center;justify-content:center;font-family:'Inter Tight',sans-serif;font-weight:600;font-size:19px}
+
+/* form */
+form{background:var(--surface);border:1px solid var(--line-2);border-radius:18px;padding:34px;display:flex;flex-direction:column;gap:18px}
+.field{display:flex;flex-direction:column;gap:7px}
+.field label{font-size:13px;font-weight:500;color:#B4B4B9}
+.field input,.field select,.field textarea{font:inherit;color:var(--text);padding:12px 14px;border:1px solid var(--line-3);border-radius:10px;background:var(--bg);min-height:46px;width:100%}
+.field input:focus,.field select:focus,.field textarea:focus{outline:2px solid var(--accent);outline-offset:1px;border-color:transparent}
+.field textarea{resize:vertical}
+.row2{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:18px}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.form-msg{margin:0;font-size:15px;min-height:1.6em}
+.form-msg.ok{color:var(--ok)}
+.form-msg.err{color:#F08A78}
+
+footer{background:#0A0A0B;border-top:1px solid #1C1C1F;color:var(--muted-2)}
+.foot{padding-top:40px;padding-bottom:40px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px;font-size:14px}
+
+/* motion */
+@keyframes blink{0%,49%{opacity:1}50%,100%{opacity:0}}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(229,101,79,.55)}70%{box-shadow:0 0 0 8px rgba(229,101,79,0)}100%{box-shadow:0 0 0 0 rgba(229,101,79,0)}}
+@keyframes pulseok{0%{box-shadow:0 0 0 0 rgba(76,183,130,.5)}70%{box-shadow:0 0 0 8px rgba(76,183,130,0)}100%{box-shadow:0 0 0 0 rgba(76,183,130,0)}}
+@keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+@keyframes scan{from{transform:translateX(-100%)}to{transform:translateX(400%)}}
+.pulse{animation:pulse 1.8s ease-out infinite}
+.pulse-ok{animation:pulseok 2.4s ease-out infinite}
+.float{animation:float 7s ease-in-out infinite}
+.scan{position:absolute;left:0;bottom:0;width:100%;height:1px;overflow:hidden}
+.scan div{width:25%;height:1px;background:linear-gradient(90deg,transparent,var(--accent),transparent);animation:scan 3.2s ease-in-out infinite}
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .8s ease,transform .8s cubic-bezier(.2,.7,.2,1)}
+.reveal.in{opacity:1;transform:none}
+.no-js .reveal{opacity:1;transform:none}
+
+@media (max-width:640px){
+  .hero-in{padding-top:64px;padding-bottom:64px;gap:40px}
+  .hero h1{font-size:40px}
+  .h2{font-size:32px}
+  .section{padding-top:72px}
+  .split{padding-top:72px;padding-bottom:72px}
+  .product,form{padding:26px}
+  .board{margin-left:0}
+  nav{gap:18px}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none !important;transition:none !important}
+  .reveal{opacity:1;transform:none}
+  html{scroll-behavior:auto}
+}
+</style>
+</head>
+<body class="no-js">
+
+<header>
+  <div class="wrap nav">
+    <a href="#inicio" class="brand">
+      <svg width="32" height="32" viewBox="0 0 34 34" fill="none" aria-hidden="true"><rect x="0.5" y="0.5" width="33" height="33" rx="8" fill="#17171A" stroke="#2E2E33"/><path d="M6 25 L14 12 L19 19 L22 15 L28 25 Z" fill="none" stroke="#D4C29A" stroke-width="1.8" stroke-linejoin="round"/></svg>
+      <span>Montera Labs</span>
+    </a>
+    <nav aria-label="Principal">
+      <a class="lnk" href="#servicios">Servicios</a>
+      <a class="lnk" href="#productos">Productos</a>
+      <a class="lnk" href="#proceso">Cómo trabajamos</a>
+      <a class="lnk" href="#nosotros">Nosotros</a>
+      <a class="btn sm" href="#contacto">Hablemos</a>
+    </nav>
+  </div>
+  <div class="scan" aria-hidden="true"><div></div></div>
+</header>
+
+<main>
+<section id="inicio" class="hero">
+  <div class="hero-grid" aria-hidden="true"></div>
+  <div class="wrap hero-in">
+    <div class="hero-copy">
+      <p class="eyebrow" style="display:flex;align-items:center;gap:10px"><span class="live-dot pulse-ok"></span>Estudio de desarrollo de software · Lima</p>
+      <h1 class="display">Software sólido para <span class="rot" id="rot" aria-live="off"><span class="on">tu empresa</span><span>tus clientes</span><span>tu equipo</span><span>tu operación</span></span></h1>
+      <p class="lead" style="font-size:19px;max-width:540px">Diseñamos y construimos sistemas a medida y productos propios: seguros, pensados para crecer y hechos para que tu equipo los use de verdad.</p>
+      <div style="display:flex;flex-wrap:wrap;gap:12px;padding-top:10px">
+        <a class="btn" href="#contacto">Cuéntanos tu proyecto</a>
+        <a class="btn ghost" href="#productos">Ver nuestros productos</a>
+      </div>
+    </div>
+
+    <div class="hero-visual" aria-hidden="true">
+      <div class="term float">
+        <div class="term-bar">
+          <i></i><i></i><i></i>
+          <span class="mono" style="margin-left:10px;font-size:12px;color:var(--muted-2)">montera-labs — despliegue</span>
+          <span class="mono" id="term-status" style="margin-left:auto;font-size:11px;color:var(--warn)">● en curso</span>
+        </div>
+        <div class="term-body" id="term">
+          <div class="term-line"><b style="color:var(--accent)">$</b><span style="color:var(--text)">git push origin main</span></div>
+          <div class="term-line"><b style="color:var(--muted-2)">›</b><span style="color:var(--muted)">Compilando 6 microservicios…</span></div>
+          <div class="term-line"><b style="color:var(--ok)">✓</b><span style="color:var(--text-2)">Pruebas automáticas: todas en verde</span></div>
+          <div class="term-line"><b style="color:var(--ok)">✓</b><span style="color:var(--text-2)">Imágenes Docker construidas</span></div>
+          <div class="term-line"><b style="color:var(--muted-2)">›</b><span style="color:var(--muted)">Desplegando gateway y servicios…</span></div>
+          <div class="term-line"><b style="color:var(--ok)">✓</b><span style="color:#fff">Servicios en línea · 0 errores</span></div>
+          <div style="display:flex;gap:10px;padding-top:2px"><span style="color:var(--accent);width:14px">$</span><span class="cursor"></span></div>
+        </div>
+        <div class="term-prog"><div id="term-prog"></div></div>
+      </div>
+
+      <div class="board">
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding-bottom:10px">
+          <span style="font-family:'Inter Tight',sans-serif;font-weight:600;font-size:14px;color:#fff">SIRECOUNT · Tablero del estudio</span>
+          <span style="font-size:11px;color:var(--muted-2)">vista ilustrativa</span>
+        </div>
+        <div class="board-row"><span>Comercial Andina S.A.C.</span><span class="st"><i style="background:var(--ok)"></i>Lista para aceptar</span></div>
+        <div class="board-row"><span>Ferretería El Puente E.I.R.L.</span><span class="st"><i style="background:var(--warn)"></i>2 observaciones</span></div>
+        <div class="board-row"><span>Distribuidora Rímac S.A.</span><span class="st"><i class="pulse" style="background:var(--alert)"></i>Vence en 2 días</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="marquee" aria-label="Tecnologías con las que trabajamos">
+  <div class="track">
+    <div><span class="mono" style="color:var(--muted-2);font-size:13px">// stack</span><span>Java 21</span><span class="sep" aria-hidden="true">◆</span><span>Spring Boot</span><span class="sep" aria-hidden="true">◆</span><span>WebFlux reactivo</span><span class="sep" aria-hidden="true">◆</span><span>Angular</span><span class="sep" aria-hidden="true">◆</span><span>Microservicios</span><span class="sep" aria-hidden="true">◆</span><span>SQL Server</span><span class="sep" aria-hidden="true">◆</span><span>RabbitMQ</span><span class="sep" aria-hidden="true">◆</span><span>Keycloak · OAuth2</span><span class="sep" aria-hidden="true">◆</span><span>Docker</span><span class="sep" aria-hidden="true">◆</span><span>GitHub Actions</span><span class="sep" aria-hidden="true">◆</span></div>
+    <div aria-hidden="true"><span class="mono" style="color:var(--muted-2);font-size:13px">// stack</span><span>Java 21</span><span class="sep">◆</span><span>Spring Boot</span><span class="sep">◆</span><span>WebFlux reactivo</span><span class="sep">◆</span><span>Angular</span><span class="sep">◆</span><span>Microservicios</span><span class="sep">◆</span><span>SQL Server</span><span class="sep">◆</span><span>RabbitMQ</span><span class="sep">◆</span><span>Keycloak · OAuth2</span><span class="sep">◆</span><span>Docker</span><span class="sep">◆</span><span>GitHub Actions</span><span class="sep">◆</span></div>
+  </div>
+</section>
+
+<section id="servicios" class="wrap section">
+  <div class="sec-head reveal">
+    <p class="eyebrow">Servicios</p>
+    <h2 class="display h2">Construimos el software que tu operación necesita.</h2>
+    <p class="lead">Desde una herramienta interna hasta una plataforma para tus clientes, con el mismo cuidado que ponemos en nuestros propios productos.</p>
+  </div>
+  <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(250px,1fr))">
+    <div class="card reveal"><span class="num">01</span><svg class="ico" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#D4C29A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M8 21h8M12 18v3"/><path d="M9 9l-2 2 2 2M15 9l2 2-2 2"/></svg><span class="card-title">Sistemas a medida</span><span class="muted">Software diseñado alrededor de cómo trabaja tu empresa, no al revés.</span></div>
+    <div class="card reveal"><span class="num">02</span><svg class="ico" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#D4C29A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18"/><path d="M7 6.5h.01M10 6.5h.01"/><path d="M7 13h6M7 16h10"/></svg><span class="card-title">Aplicaciones web</span><span class="muted">Plataformas y paneles que funcionan igual de bien en la computadora y en el celular.</span></div>
+    <div class="card reveal"><span class="num">03</span><svg class="ico" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#D4C29A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="6" r="2.5"/><circle cx="18" cy="18" r="2.5"/><path d="M8.3 10.9l7.4-3.8M8.3 13.1l7.4 3.8"/></svg><span class="card-title">Integraciones y APIs</span><span class="muted">Conectamos tus sistemas entre sí y con servicios externos, incluidos los del Estado.</span></div>
+    <div class="card reveal"><span class="num">04</span><svg class="ico" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#D4C29A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12a8 8 0 0 1 14-5.3L20 9"/><path d="M20 4v5h-5"/><path d="M20 12a8 8 0 0 1-14 5.3L4 15"/><path d="M4 20v-5h5"/></svg><span class="card-title">Automatización</span><span class="muted">Tareas repetitivas que hoy se hacen a mano, resueltas por un sistema que no se cansa.</span></div>
+  </div>
+</section>
+
+<section id="productos" class="wrap section" style="padding-top:80px">
+  <div class="sec-head reveal">
+    <p class="eyebrow">Nuestros productos</p>
+    <h2 class="display h2">Empezamos por un problema que conocemos de cerca.</h2>
+    <p class="lead">Nuestros primeros productos resuelven la carga tributaria de las empresas peruanas y de los contadores que las acompañan.</p>
+  </div>
+  <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(min(320px,100%),1fr));gap:24px">
+    <article class="card product reveal">
+      <h3 class="display">Evenly</h3>
+      <p style="margin:0;font-size:17px;font-weight:500">Facturación electrónica multiempresa</p>
+      <p class="muted" style="margin:0">Para empresas que venden y despachan: emite, imprime y controla tus comprobantes sin depender del portal de SUNAT.</p>
+      <ul>
+        <li><svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="#D4C29A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10.5 L8 14.5 L16 6"/></svg><span>Facturas y boletas firmadas y enviadas a SUNAT en segundos.</span></li>
+        <li><svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="#D4C29A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10.5 L8 14.5 L16 6"/></svg><span>Si SUNAT no responde, el comprobante queda pendiente y se reenvía solo. Ninguna venta se pierde.</span></li>
+        <li><svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="#D4C29A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10.5 L8 14.5 L16 6"/></svg><span>Varias empresas en una sola cuenta, con permisos por usuario.</span></li>
+        <li><svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="#D4C29A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10.5 L8 14.5 L16 6"/></svg><span>Impresión A4 y ticket de 80 o 58 mm con QR, y cálculo de detracciones.</span></li>
+      </ul>
+      <div class="cta"><a class="btn" href="#contacto" data-interes="Evenly">Solicitar demo</a></div>
+    </article>
+    <article class="card product reveal">
+      <h3 class="display">SIRECOUNT</h3>
+      <p style="margin:0;font-size:17px;font-weight:500">El copiloto del SIRE para estudios contables</p>
+      <p class="muted" style="margin:0">Para contadores que llevan decenas de empresas: todo el SIRE de tus clientes en una sola pantalla, junto al software contable que ya usas.</p>
+      <ul>
+        <li><svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="#D4C29A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10.5 L8 14.5 L16 6"/></svg><span>Descarga las propuestas de ventas y compras de todas tus empresas, sin entrar al portal una por una.</span></li>
+        <li><svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="#D4C29A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10.5 L8 14.5 L16 6"/></svg><span>Cuadra las compras contra los comprobantes y te marca lo que falta o sobra.</span></li>
+        <li><svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="#D4C29A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10.5 L8 14.5 L16 6"/></svg><span>Tablero en semáforo según el vencimiento de cada RUC.</span></li>
+        <li><svg width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="#D4C29A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10.5 L8 14.5 L16 6"/></svg><span>Accesos para tu equipo: administradores y asistentes por estudio.</span></li>
+      </ul>
+      <div class="cta"><a class="btn" href="#contacto" data-interes="SIRECOUNT">Solicitar demo</a></div>
+    </article>
+  </div>
+</section>
+
+<section id="proceso" class="wrap section" style="padding-top:80px;padding-bottom:112px;gap:44px">
+  <div class="sec-head reveal">
+    <p class="eyebrow">Cómo trabajamos</p>
+    <h2 class="display h2">Primero entendemos. Después programamos.</h2>
+  </div>
+  <ol class="steps">
+    <li class="reveal"><span class="num" style="font-size:13px">01</span><span class="t">Diagnóstico</span><span class="muted">Conversamos con quienes harán el trabajo y definimos qué problema resolver primero.</span></li>
+    <li class="reveal"><span class="num" style="font-size:13px">02</span><span class="t">Diseño</span><span class="muted">Pantallas y arquitectura antes del código, para que veas el sistema antes de pagarlo entero.</span></li>
+    <li class="reveal"><span class="num" style="font-size:13px">03</span><span class="t">Entregas por etapas</span><span class="muted">Avances que puedes probar cada pocas semanas, con pruebas automáticas en cada cambio.</span></li>
+    <li class="reveal"><span class="num" style="font-size:13px;color:var(--accent)">04</span><span class="t">Acompañamiento</span><span class="muted">Puesta en marcha, capacitación y soporte cuando el sistema ya está en uso.</span></li>
+  </ol>
+</section>
+
+<section id="seguridad" class="band">
+  <div class="wrap split">
+    <div class="l reveal">
+      <p class="eyebrow">Seguridad</p>
+      <h2 class="display h2">La seguridad va en el diseño, no al final.</h2>
+      <p class="lead">Nuestros productos manejan claves y datos tributarios de empresas. Aplicamos ese mismo estándar en cada proyecto a medida.</p>
+    </div>
+    <div class="r grid" style="grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:32px 36px">
+      <div class="feat reveal"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#D4C29A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg><strong>Datos sensibles cifrados</strong><span class="muted">Claves, credenciales y certificados se guardan cifrados con AES-GCM.</span></div>
+      <div class="feat reveal"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#D4C29A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><path d="M16 4.5a3.5 3.5 0 0 1 0 7"/><path d="M18 14.5c1.8.8 3 2.9 3 5.5"/></svg><strong>Accesos por rol</strong><span class="muted">Inicio de sesión con OAuth2: cada usuario ve solo lo que le corresponde.</span></div>
+      <div class="feat reveal"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#D4C29A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 3v6c0 4.5-3.4 8.3-8 9-4.6-.7-8-4.5-8-9V6z"/><path d="M8.5 12l2.5 2.5 4.5-5"/></svg><strong>Doble validación</strong><span class="muted">Cada pedido se verifica en la entrada y otra vez en cada servicio.</span></div>
+      <div class="feat reveal"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#D4C29A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h9l4 4v14H6z"/><path d="M14 3v5h5"/><path d="M9 13h7M9 17h5"/></svg><strong>Datos personales</strong><span class="muted">Diseñamos teniendo en cuenta la Ley N.° 29733 de Protección de Datos Personales y su reglamento.</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="nosotros" class="wrap split">
+  <div class="l reveal" style="flex-basis:420px">
+    <p class="eyebrow">Nosotros</p>
+    <h2 class="display h2">Ingeniería que entiende el negocio.</h2>
+    <p class="lead">Montera Labs nace en Lima con una convicción: el buen software empieza por entender el trabajo de quien lo va a usar. Por eso nuestro equipo une ingeniería con experiencia de negocio, y cada producto se prueba primero en casos reales.</p>
+  </div>
+  <div class="r grid" style="flex-basis:420px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))">
+    <div class="card reveal" style="gap:16px"><div class="avatar" aria-hidden="true">SM</div><div style="display:flex;flex-direction:column;gap:2px"><span style="font-weight:600;font-size:18px;color:#fff">Sebastián Montes</span><span style="color:var(--muted-2);font-size:15px">Cofundador · Ingeniería de software</span></div></div>
+    <div class="card reveal" style="gap:16px"><div class="avatar" aria-hidden="true">DM</div><div style="display:flex;flex-direction:column;gap:2px"><span style="font-weight:600;font-size:18px;color:#fff">David Montes</span><span style="color:var(--muted-2);font-size:15px">Cofundador · Contador público</span></div></div>
+  </div>
+</section>
+
+<section id="contacto" class="band" style="border-bottom:0">
+  <div class="wrap split">
+    <div class="l reveal">
+      <p class="eyebrow">Contacto</p>
+      <h2 class="display h2">Cuéntanos qué quieres construir.</h2>
+      <p class="lead">Una idea, un proceso que te quita horas o uno de nuestros productos: te respondemos con una propuesta clara y honesta.</p>
+      <div style="display:flex;flex-direction:column;gap:10px;padding-top:14px;color:var(--text-2)">        <span><span style="color:var(--muted-2)">Ubicación</span>&nbsp; Lima, Perú</span>
+      </div>
+    </div>
+    <form id="contact-form" class="r reveal" novalidate style="flex-basis:480px;position:relative">
+      <div class="row2">
+        <div class="field"><label for="f-nombre">Nombre</label><input id="f-nombre" name="nombre" type="text" autocomplete="name" required maxlength="120"></div>
+        <div class="field"><label for="f-correo">Correo</label><input id="f-correo" name="email" type="email" autocomplete="email" required maxlength="160"></div>
+      </div>
+      <div class="row2">
+        <div class="field"><label for="f-empresa">Empresa</label><input id="f-empresa" name="empresa" type="text" autocomplete="organization" maxlength="160"></div>
+        <div class="field"><label for="f-interes">Me interesa</label><select id="f-interes" name="interes"><option>Un proyecto a medida</option><option>Evenly</option><option>SIRECOUNT</option><option>Otro</option></select></div>
+      </div>
+      <div class="field"><label for="f-mensaje">¿Qué necesitas resolver?</label><textarea id="f-mensaje" name="mensaje" rows="4" required maxlength="3000"></textarea></div>
+      <div class="hp" aria-hidden="true"><label for="f-hp">No llenar</label><input id="f-hp" type="text" name="_honey" tabindex="-1" autocomplete="off"></div>
+      <div style="display:flex;flex-wrap:wrap;align-items:center;gap:16px">
+        <button class="btn" type="submit" id="f-enviar">Enviar mensaje</button>
+        <p class="form-msg" id="f-msg" role="status" aria-live="polite"></p>
+      </div>
+    </form>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
+      <svg width="24" height="24" viewBox="0 0 34 34" fill="none" aria-hidden="true"><rect x="0.5" y="0.5" width="33" height="33" rx="8" fill="#17171A" stroke="#2E2E33"/><path d="M6 25 L14 12 L19 19 L22 15 L28 25 Z" fill="none" stroke="#D4C29A" stroke-width="1.8" stroke-linejoin="round"/></svg>
+      <span style="font-family:'Inter Tight',sans-serif;font-weight:600;color:var(--text)">Montera Labs</span>
+      <span>· Desarrollo de software · Lima, Perú · RUC [RUC]</span>
+    </div>
+    <span>© 2026 Montera Labs. Todos los derechos reservados.</span>
+  </div>
+</footer>
+
+<script>
+(function () {
+  // Llave pública de Web3Forms: los mensajes llegan al correo registrado en web3forms.com.
+  // Es segura de dejar en la página (no revela el correo de destino).
+  var WEB3FORMS_KEY = 'aa6611c9-740a-4266-a7f0-1482a508f157';
+
+  document.body.classList.remove('no-js');
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Aparición al hacer scroll
+  var items = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window && !reduce) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    items.forEach(function (el) { io.observe(el); });
+  } else {
+    items.forEach(function (el) { el.classList.add('in'); });
+  }
+
+  // Titular que rota
+  var words = document.querySelectorAll('#rot span');
+  var wi = 0;
+  if (!reduce) setInterval(function () {
+    words[wi].classList.remove('on');
+    wi = (wi + 1) % words.length;
+    words[wi].classList.add('on');
+  }, 3000);
+
+  // Consola de despliegue
+  var lines = document.querySelectorAll('#term .term-line');
+  var prog = document.getElementById('term-prog');
+  var status = document.getElementById('term-status');
+  var step = 0, total = lines.length, cycle = total + 4;
+  function paint(s) {
+    var shown = Math.min(s, total);
+    lines.forEach(function (l, i) { l.classList.toggle('on', i < shown); });
+    prog.style.width = Math.round(shown / total * 100) + '%';
+    var done = shown >= total;
+    status.textContent = done ? '● desplegado' : '● en curso';
+    status.style.color = done ? 'var(--ok)' : 'var(--warn)';
+  }
+  if (reduce) { paint(total); } else {
+    paint(0);
+    setInterval(function () { step = (step + 1) % cycle; paint(step); }, 750);
+  }
+
+  // Botones "Solicitar demo" preseleccionan el producto
+  document.querySelectorAll('[data-interes]').forEach(function (a) {
+    a.addEventListener('click', function () {
+      document.getElementById('f-interes').value = a.getAttribute('data-interes');
+    });
+  });
+
+  // Formulario de contacto
+  var form = document.getElementById('contact-form');
+  var btn = document.getElementById('f-enviar');
+  var msg = document.getElementById('f-msg');
+  form.addEventListener('submit', function (ev) {
+    ev.preventDefault();
+    msg.className = 'form-msg';
+    var nombre = form.nombre.value.trim();
+    var email = form.email.value.trim();
+    var mensaje = form.mensaje.value.trim();
+    if (!nombre || !email || !mensaje || !form.email.checkValidity()) {
+      msg.classList.add('err');
+      msg.textContent = 'Completa tu nombre, un correo válido y tu mensaje.';
+      return;
+    }
+    if (form._honey.value) return; // bot
+
+    btn.disabled = true;
+    btn.textContent = 'Enviando…';
+    var datos = {
+      access_key: WEB3FORMS_KEY,
+      subject: 'Nuevo contacto web · ' + form.interes.value + ' · ' + nombre,
+      from_name: 'Web Montera Labs',
+      replyto: email,
+      Nombre: nombre,
+      Correo: email,
+      Empresa: form.empresa.value.trim() || '—',
+      'Le interesa': form.interes.value,
+      Mensaje: mensaje
+    };
+    fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify(datos)
+    })
+    .then(function (r) { return r.json().catch(function () { return {}; }).then(function (j) { return { ok: r.ok, j: j }; }); })
+    .then(function (res) {
+      if (res.ok && res.j.success === true) {
+        form.reset();
+        msg.classList.add('ok');
+        msg.textContent = '¡Gracias! Recibimos tu mensaje y te responderemos pronto.';
+      } else { throw new Error((res.j && res.j.message) || ('HTTP ' + (res.j && res.j.status || ''))); }
+    })
+    .catch(function (e) {
+      msg.classList.add('err');
+      msg.textContent = 'No se pudo enviar. Inténtalo de nuevo en unos minutos.';
+      if (e && e.message) console.warn('Web3Forms:', e.message);
+    })
+    .finally(function () {
+      btn.disabled = false;
+      btn.textContent = 'Enviar mensaje';
+    });
+  });
+})();
+</script>
+</body>
+</html>
